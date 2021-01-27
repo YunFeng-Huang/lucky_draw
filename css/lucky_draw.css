@@ -1,0 +1,147 @@
+    #lottery {
+      position: absolute;
+      top: 50%;
+      right: 2.6%;
+      left: 39%;
+      transform: translateY(-50%);
+    }
+
+
+    .lottery-unit {
+      display: inline-block;
+      width: 99px;
+      height: 120px;
+      position: relative;
+    }
+
+    #lottery img {
+      display: block;
+      width: 99px;
+      height: 100px;
+      margin-top: 20px;
+    }
+
+ #lottery img.active {
+      opacity: 0.3;
+    }
+
+
+    #lottery .lottery-unit-mark {
+      display: block;
+      position: absolute;
+      
+          right: -24px;
+    top: -10px;
+    }
+
+    #lottery .active .ranking-1.lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover
+    }
+
+    #lottery .active .ranking-2.lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-2.png')no-repeat center/cover
+    }
+
+    #lottery .active .ranking-3.lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-3.png')no-repeat center/cover
+    }
+
+
+    #lottery .active-index .ranking-1.lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover
+    }
+
+    #lottery .active-index .ranking-2.lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-2.png')no-repeat center/cover
+    }
+
+    #lottery .active-index .ranking-3.lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-3.png')no-repeat center/cover
+    } 
+    .lottery-unit-mark {
+      width: 90px;
+      height: 62px;
+    }
+
+
+    /* .mask {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: rgba(252, 211, 4, 0.5);
+      display: none;
+    } */
+    html {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: url('../img/lucky_draw/bg.png') no-repeat center/cover;
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .left-btns {
+      position: absolute;
+      left: 1.5%;
+      bottom: 20%;
+      text-align: center;
+    }
+
+    .scan {
+      width: 180px;
+      height: 180px;
+      padding: 10px;
+      background: #FFFFFF;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .btns-img,.btns-img2 {
+      cursor: pointer;
+    }
+    .btns-img.disabled {
+      cursor:not-allowed;
+    }
+    .img0,.img3,.img5{
+      display: none;
+    }
+div#myModal .ul {
+    position: absolute;
+    top: 389px;
+    left: 225px;
+    right: 127px;
+        display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+div#myModal .ul .li {
+    display: inline-block;
+    position: relative;
+}
+
+div#myModal .ul .li .lottery-unit-mark{
+        position: absolute;
+       right: -20px;
+    top: -20px;
+      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover;
+    width: 130px;
+    height: 80px;
+}
+
+
+div#myModal .ul .li.li-1 .lottery-unit-mark{
+    background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover;
+}
+div#myModal .ul .li.li-2 .lottery-unit-mark{
+    background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover;
+}
+div#myModal .ul .li.li-3 .lottery-unit-mark{
+    background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover;
+}

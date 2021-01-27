@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>扫一扫</title>
+</head>
+<style>
+    input {
+        margin: 0;
+        padding: 0;
+        display: block;
+        border: none;
+    }
+
+    form {
+        font-size: 16px;
+        color: #cecece;
+        line-height: 40px;
+    }
+
+    form input {
+        width: 300px;
+        height: 40px;
+        border: 1px solid #cecece;
+        
+    }
+
+    form span {
+        display: block;
+        height: 40px;
+        
+    }
+
+
+    form #submit {
+        background: #e12535;
+        color: #fff;
+        margin-top:20px;
+        border-radius: 8px;
+        border:none
+    }
+body{
+        height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+   
+</style>
+
+<body>
+    <form>
+        <div><span>手机号：</span><input type="text" id="username" />
+        <input type="button" value="立即注册" id="submit" />
+    </form>
+
+
+    <script src="http://www.jq22.com/jquery/jquery-1.6.2.js"></script>
+    <script type="text/javascript">
+        $(
+            function () {
+                //标记各个内容是否填写
+                var Name = 0;
+                var Word = 0;
+                var Words = 0;
+                var Emails = 0;
+                var Sexs = 0;
+                // 用户名验证
+                //表单获得焦点时显示提示信息
+                $("#username").on("focus", function () {
+                    $(".tishi").eq(0).css("display", "block");
+                });
+                //表单信息改变并失去焦点时执行
+                $("#username").on("change", function () {
+                    var vals = $("#username").val();
+                    if (vals.length < 4 || vals.length > 20) {
+                        $(".tishi").eq(0).html("用户名长度只能在4~20个字符之间").css("color", "#f00"); //进行长度验证
+                    } else {
+                        //使用ajax请求接口进行用户名重复验证
+                        $.ajax({
+                            type: "get",
+                            url: "   ",
+                            data: {
+                                "username": vals
+                            },
+                            success: function (data) {
+                                if (data.code == 0) {
+                                    $(".tishi").eq(0).html("用户名已经被使用").css("color", "#f00");
+                                } else {
+                                    $(".tishi").eq(0).html("用户名可用").css("color", "#0f0");
+                                    Name++; //验证成功Name+1
+                                }
+                            }
+                        });
+
+                    }
+                });
+
+                //密码验证
+                $("#password").on("focus", function () {
+                    $(".tishi").eq(1).css("display", "block");
+                });
+                //文本框内容改变时进行验证
+                $("#password").on("input", function () {
+                    let a = $("#password").val();
+                    let rega = /\D/; //验证密码是否为纯数字的正则
+                    if (a.length < 6 || a.length > 20) { //验证长度
+                        $(".tishi").eq(1).html("长度应为6~20个字符").css("color", "#f00");
+                    } else if (!rega.test(a)) {
+                        $(".tishi").eq(1).html("密码不能为纯数字").css("color", "#f00");
+                    } else {
+                        $(".tishi").eq(1).html("密码可用").css("color", "#0f0");
+                        Word++; //密码可用Word++
+                    }
+                });
+
+                //密码一致验证
+                $("#passwords").on("focus", function () {
+                    $(".tishi").eq(2).css("display", "block");
+                });
+                $("#passwords").on("change", function () {
+                    let a = $("#password").val();
+                    let b = $("#passwords").val();
+                    if (b != a) {
+                        $(".tishi").eq(2).html("两次输入密码不一致").css("color", "#f00");
+                    } else {
+                        $(".tishi").eq(2).html("密码一致").css("color", "#0f0");
+                        Words++; //两次密码一致Words++
+                    }
+                });
+
+                //邮箱验证
+                $("#email").on("change", function () {
+                    let a = $("#email").val();
+                    let tage =
+                    /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/; //邮箱格式验证的正则
+                    var flag = tage.test(a);
+                    if (!flag) {
+                        $(".tishi").eq(3).css({
+                            "display": "block",
+                            "color": "#f00"
+                        }).html("邮箱格式不正确");
+                    } else {
+                        $(".tishi").eq(3).css({
+                            "display": "block",
+                            "color": "#0f0"
+                        }).html("邮箱可用");
+                        Emails++; //邮箱可用时Emails++
+                    };
+                });
+
+                //性别的验证
+                $("input[name='sex']").on("change", function () {
+                    Sexs++; //选择性别Sexs++
+                });
+
+                //哪一项不合格弹出对应的信息
+                $("#submit").on("click", function () {
+                    if (!Name) {
+                        alert("请输入正确的用户名");
+                    }
+                    if (!Word) {
+                        alert("请输入正确的密码")
+                    }
+                    if (!Words) {
+                        alert("两次密码不一致")
+                    }
+                    if (!Emails) {
+                        alert("请输入正确的邮箱");
+                    }
+                    if (!Sexs) {
+                        alert("请选择性别");
+                    }
+                    //所有项都符合要求时请求接口进行注册
+                    if (Name & Word & Words & Emails & Sexs) {
+                        var userName = $("#username").val(); //获取用户名
+                        var passWord = $("#password").val(); //获取密码
+                        var Email = $("#email").val(); //获取邮箱
+                        var sex = $("input[name='sex']:checked").val(); //获取性别
+                        $.ajax({
+                            type: "POST",
+                            url: "    ",
+                            data: {
+                                'username': userName,
+                                'password': passWord,
+                                'email': Email,
+                                'sex': sex
+                            },
+                            success: function (data) {
+                                if (data.msg == "成功") {
+                                    alert("注册成功");
+                                } else {
+                                    alert("注册失败");
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+    </script>
+</body>
+
+</html>
