@@ -1,19 +1,11 @@
 "use strict";
 
-function getQueryString(name) {
-  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-  var r = location.search.substr(1).match(reg);
+var count = 72; //数量
 
-  if (r != null) {
-    return decodeURIComponent(r[2]);
-  }
+var type; //等级
 
-  return null;
-}
-
-var count = 72;
 var click = false;
-var type;
+var isOne = true;
 
 for (var i = 0; i < count; i++) {
   var li = "<div class=\"lottery-unit lottery-unit-".concat(i, "\">\n        <img class=\"active1\" src=\"./img/lucky_draw/4.png\">\n        <div class=\"lottery-unit-mark\"></div>\n      </div>");
@@ -72,8 +64,24 @@ var lottery = {
     return false;
   }
 };
-var v = type == '1' ? 15 : 10;
+var v = isOne ? 15 : 10;
 var isEnd = true;
+var a = 0;
+var winning;
+
+function _log() {
+  $("#myModal .ul").html('');
+  var len = isOne ? 1 : 5;
+
+  for (var i = 0; i < len; i++) {
+    var html = "<div class=\"li li-".concat(type, "\">\n          <img src=\"./img/lucky_draw/4.png\" width=\"220px\" height=\"220px\">\n          <div class=\"lottery-unit-mark\"></div>\n        </div>");
+    $("#myModal .ul").append(html);
+  }
+
+  if (isOne) $("#myModal .ul").css('justify-content', 'center');
+  $("#myModal").attr('class', "reveal-modal log-".concat(type));
+  $('#myModal').reveal($(this).data());
+}
 
 function roll() {
   lottery.times += 1;
@@ -81,20 +89,39 @@ function roll() {
 
   if (lottery.times > lottery.cycle - 10 && lottery.prize == lottery.index) {
     $("#lottery").find(".lottery-unit-" + lottery.prize).addClass("active-index");
-    lottery.timersList.push(lottery.prize);
     lottery.times = 0;
     lottery.prize = -1;
     console.log('stop');
-    $('#myModal').reveal($(this).data());
-    click = false;
-    clearTimeout(lottery.timer);
+
+    if (isOne) {
+      lottery.timersList.push(lottery.prize);
+
+      _log();
+
+      click = false;
+      clearTimeout(lottery.timer);
+    } else {
+      if (a < 4) {
+        a++;
+        console.log(a);
+        lottery.speed = 100;
+        roll();
+      } else {
+        lottery.timersList.push(lottery.prize);
+
+        _log();
+
+        clearTimeout(lottery.timer);
+      }
+    }
   } else {
     if (lottery.times < lottery.cycle) {
       lottery.speed -= 20;
     } else if (lottery.times == lottery.cycle) {
-      var index = Math.random() * lottery.count | 0; // lottery.prize = 1;
-
-      lottery.prize = index;
+      // var index = Math.random() * (lottery.count) | 0;
+      // lottery.prize = 1;
+      console.log(winning, winning[a], 'winning[a]');
+      lottery.prize = winning[a];
     } else {
       if (lottery.times >= lottery.cycle + 10 && (Math.abs(lottery.prize - lottery.index) < v || lottery.prize + (70 - lottery.index) < v)) {
         lottery.speed += 60;
@@ -108,7 +135,7 @@ function roll() {
     }
 
     ;
-    if (type != 1) lottery.speed = 10;
+    if (type != 1) lottery.speed = 20;
     lottery.timer = setTimeout(roll, lottery.speed);
   }
 
@@ -116,29 +143,29 @@ function roll() {
 }
 
 $("#myModal .close-reveal-modal").click(function (e) {
-  if (click) {
-    return false;
+  if (lottery.timersList.length < +lottery.number) {
+    a = 0;
+    lottery.speed = 100;
+    post();
+    roll();
   }
 
-  if (lottery.timersList.length < +lottery.number) {
-    lottery.speed = 100;
-    roll();
-
-    if (lottery.timersList.length + 1 > +lottery.number) {
-      if (type == '3') {
-        $('.btns-img img4').addClass('disabled');
-        $('.btns-img img2').removeClass('disabled');
-      }
-
-      if (type == '2') {
-        $('.btns-img img2').addClass('disabled');
-        $('.btns-img img1').removeClass('disabled');
-      }
-
-      if (type == '1') {
-        $('.btns-img img1').addClass('disabled');
-      }
+  if (lottery.timersList.length + 1 > +lottery.number) {
+    if (type == '3') {
+      $('.btns-img img4').addClass('disabled');
+      $('.btns-img img2').removeClass('disabled');
     }
+
+    if (type == '2') {
+      $('.btns-img img2').addClass('disabled');
+      $('.btns-img img1').removeClass('disabled');
+    }
+
+    if (isOne) {
+      $('.btns-img img1').addClass('disabled');
+    }
+
+    click = false;
   }
 });
 var arr = [];
@@ -149,10 +176,12 @@ window.onload = function () {
     if (click || e.currentTarget.className.includes('disabled')) {
       return false;
     } else {
+      post();
       click = true;
       lottery.init('lottery');
       var number = e.currentTarget.dataset.number;
       type = e.currentTarget.dataset.type;
+      isOne = type == '1';
 
       if (arr.includes(type)) {
         alert('当前中奖名额已满！');

@@ -25,7 +25,15 @@
 		position: absolute;
 		z-index: 101;
 		}
-		
+	.reveal-modal.log-1 {
+				background:  url('../img/lucky_draw/log-1.png') no-repeat center/cover;
+		}	
+		.reveal-modal.log-2 {
+				background:  url('../img/lucky_draw/log-2.png') no-repeat center/cover;
+		}
+		.reveal-modal.log-3 {
+				background:  url('../img/lucky_draw/log-3.png') no-repeat center/cover;
+		}
 	.reveal-modal.small 		{ width: 200px; margin-left: -140px;}
 	.reveal-modal.medium 		{ width: 400px; margin-left: -240px;}
 	.reveal-modal.large 		{ width: 600px; margin-left: -340px;}

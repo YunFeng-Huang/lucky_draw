@@ -5,14 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
   <link rel="stylesheet" type="text/css" href="css/lucky_draw.css">
-    	<link rel="stylesheet" href="css/reveal.css">	
-
-  <title>抽奖</title>
+  <link rel="stylesheet" href="css/reveal.css">
+  <title>年会抽奖</title>
 </head>
 
 <body>
-  <!-- <a id="btn" href="#">开始</a> -->
-  <!-- <a href="#" class="big-link" data-reveal-id="myModal">弹框</a> -->
   <div id="lottery"></div>
   <div class="left-btns">
     <img src="./img/lucky_draw/4.png" class="scan">
@@ -22,39 +19,27 @@
       <img class="btns-img img4" src="./img/lucky_draw/3.png" data-number="6" data-type="3">
     </div>
   </div>
- <div id="myModal" class="reveal-modal">
-      <div class="ul">
-        <div class="li li-1">
-          <img src="./img/lucky_draw/4.png" width="220px" height="220px">
-          <div class="lottery-unit-mark"></div>
-        </div>
-        <div class="li">
-          <img src="./img/lucky_draw/4.png" width="220px" height="220px">
-          <div class="lottery-unit-mark"></div>
-        </div>
-        <div class="li">
-          <img src="./img/lucky_draw/4.png" width="220px" height="220px">
-          <div class="lottery-unit-mark"></div>
-        </div>
-        <div class="li">
-          <img src="./img/lucky_draw/4.png" width="220px" height="220px">
-          <div class="lottery-unit-mark"></div>
-        </div>
-        <div class="li">
-          <img src="./img/lucky_draw/4.png" width="220px" height="220px">
-          <div class="lottery-unit-mark"></div>
-        </div>
-      </div>
-			<a class="close-reveal-modal">
-        <img src="./img/lucky_draw/again.png" alt="">
-      </a>
+  <div id="myModal" class="reveal-modal">
+    <div class="ul">
+
     </div>
-
-
-
- <script src="http://www.jq22.com/jquery/jquery-1.6.2.js"></script>
-	<script type="text/javascript" src="./js/jquery.reveal.js"></script>
-  <script type="text/javascript"></script>
+    <a class="close-reveal-modal">
+      <img src="./img/lucky_draw/again.png" alt="">
+    </a>
+  </div>
+  <script src="http://www.jq22.com/jquery/jquery-1.6.2.js"></script>
+  <script type="text/javascript" src="./js/jquery.reveal.js"></script>
+  <script type="text/javascript">
+    function post() {
+      winning = [
+        parseInt(Math.random() * (lottery.count)),
+        parseInt(Math.random() * (lottery.count)),
+        parseInt(Math.random() * (lottery.count)),
+        parseInt(Math.random() * (lottery.count)),
+        parseInt(Math.random() * (lottery.count)),
+      ];
+    }
+  </script>
   <script src="./js/lucky_draw.js"></script>
 </body>
 
