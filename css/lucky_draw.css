@@ -2,7 +2,7 @@
       position: absolute;
       top: 50%;
       right: 2.6%;
-      left: 39%;
+      left: 40%;
       transform: translateY(-50%);
     }
 
@@ -22,7 +22,7 @@
     }
 
     #lottery img.active {
-      opacity: 0.3;
+      opacity: 0.5;
     }
 
 
@@ -34,29 +34,34 @@
       top: -10px;
     }
 
-    #lottery .active .ranking-1.lottery-unit-mark {
-      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover
+    #lottery .active .ranking-3.lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-3.png')no-repeat center/cover
     }
 
     #lottery .active .ranking-2.lottery-unit-mark {
       background: url('../img/lucky_draw/ranking-2.png')no-repeat center/cover
     }
 
-    #lottery .active .ranking-3.lottery-unit-mark {
+
+
+
+    #lottery .active .ranking-1.lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover
+    }
+
+
+
+    #lottery .active-index .ranking-3.lottery-unit-mark {
       background: url('../img/lucky_draw/ranking-3.png')no-repeat center/cover
     }
 
-
-    #lottery .active-index .ranking-1.lottery-unit-mark {
-      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover
-    }
 
     #lottery .active-index .ranking-2.lottery-unit-mark {
       background: url('../img/lucky_draw/ranking-2.png')no-repeat center/cover
     }
 
-    #lottery .active-index .ranking-3.lottery-unit-mark {
-      background: url('../img/lucky_draw/ranking-3.png')no-repeat center/cover
+    #lottery .active-index .ranking-1.lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover
     }
 
     .lottery-unit-mark {
@@ -122,8 +127,8 @@
     div#myModal .ul {
       position: absolute;
       top: 389px;
-      left: 225px;
-      right: 127px;
+      left: 182px;
+      right: 164px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -139,20 +144,19 @@
       position: absolute;
       right: -20px;
       top: -40px;
-      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover;
       width: 130px;
       height: 80px;
+      z-index: 1000;
     }
 
-
-    div#myModal .ul .li.li-1 .lottery-unit-mark {
-      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover;
+    div#myModal .ul .li.li-3 .lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-3.png')no-repeat center/cover;
     }
 
     div#myModal .ul .li.li-2 .lottery-unit-mark {
       background: url('../img/lucky_draw/ranking-2.png')no-repeat center/cover;
     }
 
-    div#myModal .ul .li.li-3 .lottery-unit-mark {
-      background: url('../img/lucky_draw/ranking-3.png')no-repeat center/cover;
+    div#myModal .ul .li.li-1 .lottery-unit-mark {
+      background: url('../img/lucky_draw/ranking-1.png')no-repeat center/cover;
     }

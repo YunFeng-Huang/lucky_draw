@@ -1,16 +1,10 @@
 
-let count = 72 //数量
+var count = 72 //数量
 var type; //等级
 var click = false;
 let isOne = true;
 
-for (var i = 0; i < count; i++) {
-  let li = `<div class="lottery-unit lottery-unit-${i}">
-        <img class="active1" src="./img/lucky_draw/4.png">
-        <div class="lottery-unit-mark"></div>
-      </div>`
-  $("#lottery").append(li)
-}
+
 
 
 var lottery = {
@@ -61,7 +55,7 @@ function _log() {
   let len = isOne ? 1 : 5;
   for (var i = 0; i < len; i++) {
     let html = `<div class="li li-${type}">
-          <img src="./img/lucky_draw/4.png" width="220px" height="220px">
+          <img src="${winning[i].avatar}" width="220px" height="220px">
           <div class="lottery-unit-mark"></div>
         </div>`
     $("#myModal .ul").append(html);
@@ -104,8 +98,7 @@ function roll() {
     } else if (lottery.times == lottery.cycle) {
       // var index = Math.random() * (lottery.count) | 0;
       // lottery.prize = 1;
-      console.log(winning, winning[a], 'winning[a]');
-      lottery.prize = winning[a];
+      lottery.prize = winning[a].id;
     } else {
       if (lottery.times >= lottery.cycle + 10 && (Math.abs(lottery.prize - lottery.index) < v || lottery.prize + (70 - lottery.index) < v)) {
         lottery.speed += 60;
@@ -124,26 +117,29 @@ function roll() {
 }
 
 $("#myModal .close-reveal-modal").click(function (e) {
-  if (lottery.timersList.length < +lottery.number) {
-    a = 0;
-    lottery.speed = 100;
-    post();
-    roll()
-  }
+
+  console.log(lottery.timersList.length + 1, +lottery.number, type);
   if (lottery.timersList.length + 1 > +lottery.number) {
     if (type == '3') {
-      $('.btns-img img4').addClass('disabled')
-      $('.btns-img img2').removeClass('disabled')
+      $('.btns-img.img4').addClass('disabled')
+      $('.btns-img.img2').removeClass('disabled')
     }
     if (type == '2') {
-      $('.btns-img img2').addClass('disabled')
-      $('.btns-img img1').removeClass('disabled')
+      $('.btns-img.img2').addClass('disabled')
+      $('.btns-img.img1').removeClass('disabled')
     }
     if (isOne) {
-      $('.btns-img img1').addClass('disabled')
+      $('.btns-img.img1').addClass('disabled')
     }
     click = false;
 
+  } else {
+    if (lottery.timersList.length < +lottery.number) {
+      a = 0;
+      lottery.speed = 100;
+      post();
+      roll()
+    }
   }
 });
 
@@ -151,6 +147,9 @@ let arr = [];
 window.onload = function () {
   lottery.init('lottery');
   $(".btns-img").click(function (e) {
+    if (window.timer) {
+      clearInterval(window.timer);
+    }
     if (click || e.currentTarget.className.includes('disabled')) {
       return false;
     } else {
@@ -176,3 +175,5 @@ window.onload = function () {
     }
   });
 };
+
+

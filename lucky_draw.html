@@ -30,15 +30,63 @@
   <script src="http://www.jq22.com/jquery/jquery-1.6.2.js"></script>
   <script type="text/javascript" src="./js/jquery.reveal.js"></script>
   <script type="text/javascript">
-    function post() {
-      winning = [
-        parseInt(Math.random() * (lottery.count)),
-        parseInt(Math.random() * (lottery.count)),
-        parseInt(Math.random() * (lottery.count)),
-        parseInt(Math.random() * (lottery.count)),
-        parseInt(Math.random() * (lottery.count)),
-      ];
+    function fetch(url, data, type = 'POST') {
+      var urlHost = 'https://dev-gateway.iuctrip.com/lottery-service';
+      return new Promise((resolve, enject) => {
+        $.ajax({
+          type: type,
+          url: urlHost + url,
+          async: true,
+          data: JSON.stringify(data),
+          contentType: "application/json",
+          headers: {
+            'content-type': 'application/json'
+          },
+          dataType: 'json',
+          success: resolve,
+          fail: enject
+        });
+      })
     }
+
+    function post() {
+      fetch('/openapi/unauth/web/lottery/draw', {}, ).then((e) => {
+        console.log(e)
+        if (e.success) {
+          winning = res.data;
+          // winning = [
+          //   {"id":parseInt(Math.random() * (lottery.count)),"name":"汪子涵","phone":"18357136323","avatar":"https://kybcrm-files.oss-cn-hangzhou.aliyuncs.com/choujiang/avatar/18357136323.jpg","department":"运营部","title":"运营部","isJoin":false,"isWin":true,"lotteryLevel":"1"},
+          //   {"id":parseInt(Math.random() * (lottery.count)),"name":"汪子涵","phone":"18357136323","avatar":"https://kybcrm-files.oss-cn-hangzhou.aliyuncs.com/choujiang/avatar/18357136323.jpg","department":"运营部","title":"运营部","isJoin":false,"isWin":true,"lotteryLevel":"1"},
+          //   {"id":parseInt(Math.random() * (lottery.count)),"name":"汪子涵","phone":"18357136323","avatar":"https://kybcrm-files.oss-cn-hangzhou.aliyuncs.com/choujiang/avatar/18357136323.jpg","department":"运营部","title":"运营部","isJoin":false,"isWin":true,"lotteryLevel":"1"},
+          //   {"id":parseInt(Math.random() * (lottery.count)),"name":"汪子涵","phone":"18357136323","avatar":"https://kybcrm-files.oss-cn-hangzhou.aliyuncs.com/choujiang/avatar/18357136323.jpg","department":"运营部","title":"运营部","isJoin":false,"isWin":true,"lotteryLevel":"1"},
+          //   {"id":parseInt(Math.random() * (lottery.count)),"name":"汪子涵","phone":"18357136323","avatar":"https://kybcrm-files.oss-cn-hangzhou.aliyuncs.com/choujiang/avatar/18357136323.jpg","department":"运营部","title":"运营部","isJoin":false,"isWin":true,"lotteryLevel":"1"},
+          // ]
+          console.log(winning, 'winning');
+        } else {
+          alert(e.message)
+        };
+      })
+    }
+
+    function employe_list() {
+      fetch('/openapi/unauth/web/lottery/employe_list', {}, ).then((res) => {
+        $("#lottery").html('')
+        let value = res.data;
+        count = value.length;
+        for (var i = 0; i < count; i++) {
+          let item = value[i]
+          let li = `<div class="lottery-unit lottery-unit-${i}">
+              <img class="${!item.isJoin?'active':''}" src="${item.avatar}">
+              <div class="lottery-unit-mark"></div>
+            </div>`
+          $("#lottery").append(li)
+        }
+      })
+    }
+    employe_list();
+    window.timer = setInterval(() => {
+      employe_list();
+    }, 5000)
   </script>
   <script src="./js/lucky_draw.js"></script>
 </body>

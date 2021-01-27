@@ -6,12 +6,6 @@ var type; //等级
 
 var click = false;
 var isOne = true;
-
-for (var i = 0; i < count; i++) {
-  var li = "<div class=\"lottery-unit lottery-unit-".concat(i, "\">\n        <img class=\"active1\" src=\"./img/lucky_draw/4.png\">\n        <div class=\"lottery-unit-mark\"></div>\n      </div>");
-  $("#lottery").append(li);
-}
-
 var lottery = {
   index: -1,
   //当前转动到哪个位置，起点位置
@@ -74,7 +68,7 @@ function _log() {
   var len = isOne ? 1 : 5;
 
   for (var i = 0; i < len; i++) {
-    var html = "<div class=\"li li-".concat(type, "\">\n          <img src=\"./img/lucky_draw/4.png\" width=\"220px\" height=\"220px\">\n          <div class=\"lottery-unit-mark\"></div>\n        </div>");
+    var html = "<div class=\"li li-".concat(type, "\">\n          <img src=\"").concat(winning[i].avatar, "\" width=\"220px\" height=\"220px\">\n          <div class=\"lottery-unit-mark\"></div>\n        </div>");
     $("#myModal .ul").append(html);
   }
 
@@ -120,8 +114,7 @@ function roll() {
     } else if (lottery.times == lottery.cycle) {
       // var index = Math.random() * (lottery.count) | 0;
       // lottery.prize = 1;
-      console.log(winning, winning[a], 'winning[a]');
-      lottery.prize = winning[a];
+      lottery.prize = winning[a].id;
     } else {
       if (lottery.times >= lottery.cycle + 10 && (Math.abs(lottery.prize - lottery.index) < v || lottery.prize + (70 - lottery.index) < v)) {
         lottery.speed += 60;
@@ -143,29 +136,31 @@ function roll() {
 }
 
 $("#myModal .close-reveal-modal").click(function (e) {
-  if (lottery.timersList.length < +lottery.number) {
-    a = 0;
-    lottery.speed = 100;
-    post();
-    roll();
-  }
+  console.log(lottery.timersList.length + 1, +lottery.number, type);
 
   if (lottery.timersList.length + 1 > +lottery.number) {
     if (type == '3') {
-      $('.btns-img img4').addClass('disabled');
-      $('.btns-img img2').removeClass('disabled');
+      $('.btns-img.img4').addClass('disabled');
+      $('.btns-img.img2').removeClass('disabled');
     }
 
     if (type == '2') {
-      $('.btns-img img2').addClass('disabled');
-      $('.btns-img img1').removeClass('disabled');
+      $('.btns-img.img2').addClass('disabled');
+      $('.btns-img.img1').removeClass('disabled');
     }
 
     if (isOne) {
-      $('.btns-img img1').addClass('disabled');
+      $('.btns-img.img1').addClass('disabled');
     }
 
     click = false;
+  } else {
+    if (lottery.timersList.length < +lottery.number) {
+      a = 0;
+      lottery.speed = 100;
+      post();
+      roll();
+    }
   }
 });
 var arr = [];
@@ -173,6 +168,10 @@ var arr = [];
 window.onload = function () {
   lottery.init('lottery');
   $(".btns-img").click(function (e) {
+    if (window.timer) {
+      clearInterval(window.timer);
+    }
+
     if (click || e.currentTarget.className.includes('disabled')) {
       return false;
     } else {
